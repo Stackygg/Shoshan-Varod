@@ -1,0 +1,207 @@
+---
+import Button from '../ui/Button.astro';
+---
+
+<section class="hero" id="hero-section">
+  <div class="hero__bg">
+    <div class="hero__overlay"></div>
+    <div class="hero__particles"></div>
+  </div>
+
+  <div class="hero__content container">
+    <span class="hero__eyebrow">Friperie Semi-Luxe à Paris</span>
+    <h1 class="hero__title">
+      La mode a une <em>seconde</em><br />
+      <span class="hero__title-accent">histoire</span>
+    </h1>
+    <p class="hero__subtitle">
+      Pièces uniques de créateurs, sélectionnées avec soin.<br class="hide-mobile" />
+      Élégance responsable, à prix doux.
+    </p>
+    <div class="hero__cta">
+      <Button href="/boutique/" variant="primary" size="lg">Découvrir la collection</Button>
+      <Button href="/a-propos/" variant="outline" size="lg">Notre histoire</Button>
+    </div>
+
+    <div class="hero__scroll-hint" id="scroll-hint">
+      <span>Défiler</span>
+      <div class="hero__scroll-line">
+        <div class="hero__scroll-dot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(212, 160, 160, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(199, 168, 125, 0.08) 0%, transparent 50%),
+      linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-soft) 100%);
+    z-index: 0;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(44, 36, 32, 0.02) 2px,
+      rgba(44, 36, 32, 0.02) 4px
+    );
+  }
+
+  .hero__particles {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(212, 160, 160, 0.3), transparent),
+      radial-gradient(1px 1px at 30% 70%, rgba(212, 160, 160, 0.2), transparent),
+      radial-gradient(1.5px 1.5px at 60% 30%, rgba(212, 160, 160, 0.25), transparent),
+      radial-gradient(1px 1px at 80% 80%, rgba(212, 160, 160, 0.2), transparent),
+      radial-gradient(1px 1px at 90% 10%, rgba(212, 160, 160, 0.15), transparent),
+      radial-gradient(1.5px 1.5px at 50% 50%, rgba(212, 160, 160, 0.1), transparent);
+    animation: float 12s ease-in-out infinite;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding-block: var(--space-5xl);
+  }
+
+  .hero__eyebrow {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-xl);
+    opacity: 0;
+    animation: fadeInDown 0.8s var(--ease-out) 0.3s forwards;
+  }
+
+  .hero__title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-4xl);
+    font-weight: var(--fw-regular);
+    line-height: 1.05;
+    color: var(--color-cream);
+    margin-bottom: var(--space-xl);
+    opacity: 0;
+    animation: fadeInUp 1s var(--ease-out) 0.5s forwards;
+  }
+
+  .hero__title em {
+    font-style: italic;
+    color: var(--color-cream);
+  }
+
+  .hero__title-accent {
+    color: var(--color-gold);
+    display: inline-block;
+    position: relative;
+  }
+
+  .hero__title-accent::after {
+    content: '';
+    position: absolute;
+    bottom: 0.05em;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-gold);
+    opacity: 0.4;
+  }
+
+  .hero__subtitle {
+    font-size: var(--fs-md);
+    color: var(--color-taupe-light);
+    line-height: var(--lh-relaxed);
+    max-width: 520px;
+    margin-inline: auto;
+    margin-bottom: var(--space-2xl);
+    opacity: 0;
+    animation: fadeInUp 1s var(--ease-out) 0.7s forwards;
+  }
+
+  .hero__cta {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeInUp 1s var(--ease-out) 0.9s forwards;
+  }
+
+  /* Scroll Hint */
+  .hero__scroll-hint {
+    position: absolute;
+    bottom: var(--space-2xl);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    opacity: 0;
+    animation: fadeIn 1s var(--ease-out) 1.5s forwards;
+  }
+
+  .hero__scroll-hint span {
+    font-size: var(--fs-xs);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-taupe);
+  }
+
+  .hero__scroll-line {
+    width: 1px;
+    height: 40px;
+    background: rgba(212, 160, 160, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero__scroll-dot {
+    width: 1px;
+    height: 12px;
+    background: var(--color-gold);
+    position: absolute;
+    top: -12px;
+    animation: scrollDot 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollDot {
+    0% { top: -12px; }
+    50% { top: 40px; }
+    100% { top: -12px; }
+  }
+
+  @media (max-width: 768px) {
+    .hero__content {
+      padding-top: calc(var(--space-5xl) + 2rem);
+    }
+
+    .hero__cta {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

@@ -1,0 +1,235 @@
+---
+
+---
+
+<div class="cart-summary" id="cart-summary">
+  <div class="cart-summary__items" id="cart-page-items">
+    <!-- Populated via JS -->
+  </div>
+
+  <div class="cart-summary__empty" id="cart-page-empty">
+    <span class="cart-summary__empty-icon">✦</span>
+    <h2>Votre sélection est vide</h2>
+    <p>Découvrez nos pièces uniques de créateurs.</p>
+    <a href="/boutique/" class="cart-summary__empty-btn">
+      Parcourir la boutique
+    </a>
+  </div>
+</div>
+
+<style>
+  .cart-summary__items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .cart-summary__empty {
+    display: none;
+    text-align: center;
+    padding: var(--space-4xl) var(--space-xl);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .cart-summary__empty.is-visible {
+    display: flex;
+  }
+
+  .cart-summary__empty-icon {
+    font-size: 3rem;
+    color: var(--color-gold);
+  }
+
+  .cart-summary__empty h2 {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    color: var(--color-cream);
+  }
+
+  .cart-summary__empty p {
+    color: var(--color-taupe);
+  }
+
+  .cart-summary__empty-btn {
+    display: inline-flex;
+    padding: var(--space-sm) var(--space-xl);
+    background: var(--color-gold);
+    color: var(--color-black);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+
+  .cart-summary__empty-btn:hover {
+    background: var(--color-gold-light);
+  }
+
+  /* Cart Page Item (bigger than drawer) */
+  :global(.cart-page-item) {
+    display: flex;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    background: var(--color-black-soft);
+    border: 1px solid rgba(212, 160, 160, 0.06);
+    border-radius: var(--radius-md);
+    transition: border-color var(--duration-fast) var(--ease-out);
+  }
+
+  :global(.cart-page-item:hover) {
+    border-color: rgba(212, 160, 160, 0.15);
+  }
+
+  :global(.cart-page-item__image) {
+    width: 100px;
+    height: 130px;
+    background: var(--color-black-muted);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: rgba(212, 160, 160, 0.15);
+  }
+
+  :global(.cart-page-item__body) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  :global(.cart-page-item__brand) {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  :global(.cart-page-item__name) {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    color: var(--color-cream);
+  }
+
+  :global(.cart-page-item__meta) {
+    font-size: var(--fs-sm);
+    color: var(--color-taupe);
+  }
+
+  :global(.cart-page-item__price) {
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-semibold);
+    color: var(--color-cream);
+    margin-top: auto;
+  }
+
+  :global(.cart-page-item__actions) {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  :global(.cart-page-item__remove) {
+    color: var(--color-taupe-dark);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: var(--space-xs);
+    transition: color var(--duration-fast) var(--ease-out);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+  }
+
+  :global(.cart-page-item__remove:hover) {
+    color: var(--color-error);
+  }
+
+  @media (max-width: 576px) {
+    :global(.cart-page-item) {
+      flex-direction: column;
+    }
+
+    :global(.cart-page-item__image) {
+      width: 100%;
+      height: 160px;
+    }
+  }
+</style>
+
+<script>
+  function renderCartPage() {
+    const container = document.getElementById('cart-page-items');
+    const emptyState = document.getElementById('cart-page-empty');
+    if (!container || !emptyState) return;
+
+    try {
+      const cart = JSON.parse(localStorage.getItem('shoshan-cart') || '[]');
+
+      if (cart.length === 0) {
+        container.style.display = 'none';
+        emptyState.classList.add('is-visible');
+        // Also update the reservation form visibility
+        const reservationForm = document.getElementById('reservation-section');
+        if (reservationForm) reservationForm.style.display = 'none';
+        return;
+      }
+
+      container.style.display = 'flex';
+      emptyState.classList.remove('is-visible');
+
+      container.innerHTML = cart.map((item: any) => {
+        const hasImg = item.image && !item.image.includes('placeholder');
+        const imgContent = hasImg
+          ? `<img src="${item.image}" alt="${item.brand}" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">`
+          : (item.brand || '?').charAt(0);
+        return `
+        <div class="cart-page-item">
+          <div class="cart-page-item__image">${imgContent}</div>
+          <div class="cart-page-item__body">
+            <span class="cart-page-item__brand">${item.brand}</span>
+            <span class="cart-page-item__name">${item.name}</span>
+            <span class="cart-page-item__meta">Taille ${item.size}</span>
+            <span class="cart-page-item__price">${item.price} €</span>
+          </div>
+          <div class="cart-page-item__actions">
+            <button class="cart-page-item__remove" data-remove-id="${item.productId}">
+              Retirer
+            </button>
+          </div>
+        </div>
+      `}).join('');
+
+      // Update total
+      const total = cart.reduce((sum: number, item: any) => sum + item.price, 0);
+      const totalEl = document.getElementById('cart-total-amount');
+      if (totalEl) totalEl.textContent = total + ' €';
+      const countEl = document.getElementById('cart-items-count');
+      if (countEl) countEl.textContent = cart.length + ' article' + (cart.length > 1 ? 's' : '');
+
+      // Remove buttons
+      container.querySelectorAll('[data-remove-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = Number((btn as HTMLElement).dataset.removeId);
+          const updated = cart.filter((c: any) => c.productId !== id);
+          localStorage.setItem('shoshan-cart', JSON.stringify(updated));
+          window.dispatchEvent(new Event('cart-updated'));
+          renderCartPage();
+        });
+      });
+    } catch {
+      console.error('Cart page render error');
+    }
+  }
+
+  renderCartPage();
+  window.addEventListener('cart-updated', renderCartPage);
+</script>

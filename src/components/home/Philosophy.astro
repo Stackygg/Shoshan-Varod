@@ -1,0 +1,213 @@
+---
+
+---
+
+<section class="philosophy section--lg" id="philosophy-section">
+  <div class="container">
+    <div class="philosophy__grid">
+      <!-- Text Side -->
+      <div class="philosophy__text reveal">
+        <span class="philosophy__eyebrow">Notre Philosophie</span>
+        <h2 class="philosophy__title">
+          Donner une <em>seconde vie</em><br />
+          aux plus belles pièces
+        </h2>
+        <div class="philosophy__divider"></div>
+        <p class="philosophy__description">
+          Chaque vêtement a une histoire. Nous croyons que les plus belles pièces méritent d'être
+          portées encore et encore. En choisissant la seconde main, vous faites un choix élégant
+          <strong>et</strong> responsable.
+        </p>
+        <div class="philosophy__stats">
+          <div class="philosophy__stat">
+            <span class="philosophy__stat-number">70%</span>
+            <span class="philosophy__stat-label">d'économie en moyenne</span>
+          </div>
+          <div class="philosophy__stat">
+            <span class="philosophy__stat-number">100%</span>
+            <span class="philosophy__stat-label">pièces authentifiées</span>
+          </div>
+          <div class="philosophy__stat">
+            <span class="philosophy__stat-number">0</span>
+            <span class="philosophy__stat-label">compromis sur le style</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual Side -->
+      <div class="philosophy__visual reveal reveal--delay-2">
+        <div class="philosophy__card">
+          <div class="philosophy__card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+              <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+              <line x1="9" y1="9" x2="9.01" y2="9"/>
+              <line x1="15" y1="9" x2="15.01" y2="9"/>
+            </svg>
+          </div>
+          <h3 class="philosophy__card-title">Sélection rigoureuse</h3>
+          <p class="philosophy__card-text">Chaque pièce est inspectée, authentifiée et préparée avec soin avant d'intégrer notre collection.</p>
+        </div>
+
+        <div class="philosophy__card">
+          <div class="philosophy__card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+              <line x1="12" y1="22.08" x2="12" y2="12"/>
+            </svg>
+          </div>
+          <h3 class="philosophy__card-title">Mode circulaire</h3>
+          <p class="philosophy__card-text">Prolonger la vie d'un vêtement, c'est réduire son empreinte environnementale de 82%.</p>
+        </div>
+
+        <div class="philosophy__card">
+          <div class="philosophy__card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <h3 class="philosophy__card-title">Prix juste</h3>
+          <p class="philosophy__card-text">Des pièces de créateurs à des prix accessibles, sans jamais compromettre la qualité.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .philosophy {
+    background: var(--color-bg-soft);
+  }
+
+  .philosophy__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+    align-items: center;
+  }
+
+  /* Text */
+  .philosophy__eyebrow {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-md);
+  }
+
+  .philosophy__title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-medium);
+    color: var(--color-cream);
+    line-height: var(--lh-snug);
+    margin-bottom: var(--space-lg);
+  }
+
+  .philosophy__title em {
+    font-style: italic;
+    color: var(--color-gold);
+  }
+
+  .philosophy__divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+    margin-bottom: var(--space-lg);
+  }
+
+  .philosophy__description {
+    font-size: var(--fs-md);
+    color: var(--color-taupe-light);
+    line-height: var(--lh-relaxed);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .philosophy__description strong {
+    color: var(--color-gold);
+    font-weight: var(--fw-medium);
+  }
+
+  /* Stats */
+  .philosophy__stats {
+    display: flex;
+    gap: var(--space-xl);
+  }
+
+  .philosophy__stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .philosophy__stat-number {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-medium);
+    color: var(--color-gold);
+    line-height: 1;
+  }
+
+  .philosophy__stat-label {
+    font-size: var(--fs-xs);
+    color: var(--color-taupe);
+    margin-top: var(--space-2xs);
+  }
+
+  /* Cards */
+  .philosophy__visual {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .philosophy__card {
+    background: var(--color-black-muted);
+    border: 1px solid rgba(212, 160, 160, 0.08);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    display: flex;
+    gap: var(--space-md);
+    align-items: flex-start;
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+
+  .philosophy__card:hover {
+    border-color: rgba(212, 160, 160, 0.2);
+    transform: translateX(4px);
+  }
+
+  .philosophy__card-icon {
+    flex-shrink: 0;
+    color: var(--color-gold);
+    opacity: 0.7;
+  }
+
+  .philosophy__card-title {
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-semibold);
+    color: var(--color-cream);
+    margin-bottom: var(--space-2xs);
+  }
+
+  .philosophy__card-text {
+    font-size: var(--fs-sm);
+    color: var(--color-taupe);
+    line-height: var(--lh-normal);
+  }
+
+  @media (max-width: 900px) {
+    .philosophy__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .philosophy__stats {
+      flex-wrap: wrap;
+    }
+  }
+</style>

@@ -1,0 +1,335 @@
+---
+import type { Product } from '../../lib/types';
+import Badge from '../ui/Badge.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+---
+
+<div class="product-info" id="product-info">
+  <!-- Breadcrumb -->
+  <nav class="product-info__breadcrumb" aria-label="Fil d'Ariane">
+    <a href="/">Accueil</a>
+    <span>›</span>
+    <a href="/boutique/">Boutique</a>
+    <span>›</span>
+    <a href={`/boutique/?cat=${product.categorySlug}`}>{product.category}</a>
+    <span>›</span>
+    <span class="product-info__breadcrumb-current">{product.name}</span>
+  </nav>
+
+  <!-- Brand & Name -->
+  <span class="product-info__brand">{product.brand}</span>
+  <h1 class="product-info__name">{product.name}</h1>
+
+  <!-- Badges -->
+  <div class="product-info__badges">
+    {product.isNew && <Badge variant="new" text="Nouvel arrivage" />}
+    <Badge variant="condition" text={product.condition} />
+  </div>
+
+  <!-- Pricing -->
+  <div class="product-info__pricing">
+    <span class="product-info__price">{product.price} €</span>
+  </div>
+
+  <!-- Short Description -->
+  <p class="product-info__short-desc">{product.shortDescription}</p>
+
+  <!-- Details -->
+  <div class="product-info__details">
+    <div class="product-info__detail">
+      <span class="product-info__detail-label">Taille</span>
+      <span class="product-info__detail-value">{product.size}</span>
+    </div>
+    <div class="product-info__detail">
+      <span class="product-info__detail-label">Couleur</span>
+      <span class="product-info__detail-value">{product.color}</span>
+    </div>
+    <div class="product-info__detail">
+      <span class="product-info__detail-label">Matière</span>
+      <span class="product-info__detail-value">{product.material}</span>
+    </div>
+    <div class="product-info__detail">
+      <span class="product-info__detail-label">État</span>
+      <span class="product-info__detail-value">{product.condition}</span>
+    </div>
+  </div>
+
+  <!-- Add to Cart -->
+  <div class="product-info__actions">
+    <button
+      class="product-info__add-btn"
+      id="add-to-cart-btn"
+      data-product-id={product.id}
+      data-product-slug={product.slug}
+      data-product-name={product.name}
+      data-product-brand={product.brand}
+      data-product-price={product.price}
+      data-product-size={product.size}
+      disabled={product.isSold}
+    >
+      {product.isSold ? 'Article vendu' : 'Ajouter au panier'}
+    </button>
+
+    <Button href="/panier/" variant="outline" fullWidth>Voir le panier</Button>
+  </div>
+
+  <!-- Guarantees -->
+  <div class="product-info__guarantees">
+    <div class="product-info__guarantee">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <span>Authenticité garantie</span>
+    </div>
+    <div class="product-info__guarantee">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+      </svg>
+      <span>Livraison soignée</span>
+    </div>
+    <div class="product-info__guarantee">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+      </svg>
+      <span>Retours sous 14 jours</span>
+    </div>
+  </div>
+
+  <!-- Full Description -->
+  <div class="product-info__description">
+    <h3 class="product-info__desc-title">Description</h3>
+    <p>{product.description}</p>
+  </div>
+</div>
+
+<style>
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  /* Breadcrumb */
+  .product-info__breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--fs-xs);
+    color: var(--color-taupe);
+    flex-wrap: wrap;
+  }
+
+  .product-info__breadcrumb a {
+    color: var(--color-taupe);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .product-info__breadcrumb a:hover {
+    color: var(--color-gold);
+  }
+
+  .product-info__breadcrumb-current {
+    color: var(--color-cream);
+  }
+
+  /* Brand & Name */
+  .product-info__brand {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .product-info__name {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-medium);
+    color: var(--color-cream);
+    line-height: var(--lh-snug);
+    margin-top: calc(-1 * var(--space-sm));
+  }
+
+  /* Badges */
+  .product-info__badges {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  /* Pricing */
+  .product-info__pricing {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .product-info__price {
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-bold);
+    color: var(--color-cream);
+  }
+
+  /* Short description */
+  .product-info__short-desc {
+    font-size: var(--fs-base);
+    color: var(--color-taupe-light);
+    line-height: var(--lh-relaxed);
+  }
+
+  /* Details */
+  .product-info__details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--color-black-muted);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(212, 160, 160, 0.06);
+  }
+
+  .product-info__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .product-info__detail-label {
+    font-size: var(--fs-xs);
+    color: var(--color-taupe);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+  }
+
+  .product-info__detail-value {
+    font-size: var(--fs-sm);
+    color: var(--color-cream);
+    font-weight: var(--fw-medium);
+  }
+
+  /* Actions */
+  .product-info__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .product-info__add-btn {
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--color-gold);
+    color: var(--color-black);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+
+  .product-info__add-btn:hover:not(:disabled) {
+    background: var(--color-gold-light);
+    box-shadow: var(--shadow-gold);
+    transform: translateY(-2px);
+  }
+
+  .product-info__add-btn:disabled {
+    background: var(--color-taupe-dark);
+    cursor: not-allowed;
+  }
+
+  /* Guarantees */
+  .product-info__guarantees {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--color-black-muted);
+    border-radius: var(--radius-md);
+  }
+
+  .product-info__guarantee {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--fs-sm);
+    color: var(--color-taupe-light);
+  }
+
+  .product-info__guarantee svg {
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  /* Description */
+  .product-info__description {
+    padding-top: var(--space-lg);
+    border-top: 1px solid rgba(212, 160, 160, 0.08);
+  }
+
+  .product-info__desc-title {
+    font-family: var(--font-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-md);
+  }
+
+  .product-info__description p {
+    font-size: var(--fs-base);
+    color: var(--color-taupe-light);
+    line-height: var(--lh-relaxed);
+  }
+</style>
+
+<script>
+  const addBtn = document.getElementById('add-to-cart-btn') as HTMLButtonElement;
+
+  addBtn?.addEventListener('click', () => {
+    if (addBtn.disabled) return;
+
+    const item = {
+      productId: Number(addBtn.dataset.productId),
+      slug: addBtn.dataset.productSlug,
+      name: addBtn.dataset.productName,
+      brand: addBtn.dataset.productBrand,
+      price: Number(addBtn.dataset.productPrice),
+      size: addBtn.dataset.productSize,
+      image: '',
+    };
+
+    try {
+      const cart = JSON.parse(localStorage.getItem('shoshan-cart') || '[]');
+      if (cart.some((c: any) => c.productId === item.productId)) {
+        addBtn.textContent = 'Déjà dans le panier';
+        addBtn.style.background = 'var(--color-taupe-dark)';
+        setTimeout(() => {
+          addBtn.textContent = 'Ajouter au panier';
+          addBtn.style.background = '';
+        }, 2000);
+        return;
+      }
+
+      cart.push(item);
+      localStorage.setItem('shoshan-cart', JSON.stringify(cart));
+      window.dispatchEvent(new Event('cart-updated'));
+
+      addBtn.textContent = '✓ Ajouté au panier';
+      setTimeout(() => { addBtn.textContent = 'Ajouter au panier'; }, 2500);
+    } catch {
+      console.error('Cart error');
+    }
+  });
+</script>

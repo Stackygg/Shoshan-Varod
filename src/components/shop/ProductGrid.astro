@@ -1,0 +1,71 @@
+---
+import type { Product } from '../../lib/types';
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+  products: Product[];
+}
+
+const { products } = Astro.props;
+---
+
+<div class="product-grid" id="product-grid">
+  {products.length > 0 ? (
+    products.map((product, i) => (
+      <div class={`product-grid__item reveal reveal--delay-${(i % 4) + 1}`}>
+        <ProductCard product={product} />
+      </div>
+    ))
+  ) : (
+    <div class="product-grid__empty">
+      <p class="product-grid__empty-icon">✦</p>
+      <h3>Aucun article trouvé</h3>
+      <p>Essayez de modifier vos filtres.</p>
+    </div>
+  )}
+</div>
+
+<style>
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .product-grid__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--space-4xl) var(--space-xl);
+  }
+
+  .product-grid__empty-icon {
+    font-size: 2rem;
+    color: var(--color-gold);
+    margin-bottom: var(--space-md);
+  }
+
+  .product-grid__empty h3 {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    color: var(--color-cream);
+    margin-bottom: var(--space-xs);
+  }
+
+  .product-grid__empty p {
+    color: var(--color-taupe);
+  }
+
+  @media (max-width: 1024px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 576px) {
+    .product-grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+      margin-inline: auto;
+    }
+  }
+</style>

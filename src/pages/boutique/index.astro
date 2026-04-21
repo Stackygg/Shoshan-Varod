@@ -1,0 +1,213 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FilterSidebar from '../../components/shop/FilterSidebar.astro';
+import ProductGrid from '../../components/shop/ProductGrid.astro';
+import SectionTitle from '../../components/ui/SectionTitle.astro';
+import { getProducts } from '../../lib/wordpress';
+
+const allProducts = await getProducts();
+---
+
+<BaseLayout
+  title="Boutique"
+  description="Découvrez notre collection de pièces de créateurs de seconde main. Sandro, Maje, Isabel Marant, A.P.C. et plus encore."
+>
+  <!-- Page Header -->
+  <section class="shop-header">
+    <div class="container">
+      <div class="shop-header__content reveal">
+        <SectionTitle
+          subtitle="Notre Collection"
+          title="La Boutique"
+        />
+        <p class="shop-header__count">{allProducts.length} pièces disponibles</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop Content -->
+  <section class="shop-content">
+    <div class="container">
+      <div class="shop-layout">
+        <!-- Mobile Filter Toggle -->
+        <button class="shop-filter-toggle hide-desktop" id="filter-toggle">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>
+          </svg>
+          <span>Filtres</span>
+        </button>
+
+        <FilterSidebar />
+
+        <div class="shop-main">
+          <!-- Sort Bar -->
+          <div class="shop-sort">
+            <span class="shop-sort__label">Trier par</span>
+            <select class="shop-sort__select" id="sort-select">
+              <option value="newest">Nouveautés</option>
+              <option value="price-asc">Prix croissant</option>
+              <option value="price-desc">Prix décroissant</option>
+              <option value="discount">Meilleure affaire</option>
+            </select>
+          </div>
+
+          <ProductGrid products={allProducts} />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .shop-header {
+    position: relative;
+    padding-top: calc(80px + var(--space-3xl));
+    padding-bottom: var(--space-3xl);
+    margin-bottom: var(--space-3xl);
+    background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-soft) 100%);
+    overflow: hidden;
+  }
+
+  .shop-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 0%, rgba(212, 160, 160, 0.08) 0%, transparent 70%);
+  }
+
+  .shop-header__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .shop-header__count {
+    text-align: center;
+    font-size: var(--fs-sm);
+    color: var(--color-taupe);
+    margin-top: calc(-1 * var(--space-md));
+  }
+
+  .shop-content {
+    padding-bottom: var(--space-4xl);
+  }
+
+  .shop-layout {
+    display: flex;
+    gap: var(--space-2xl);
+    align-items: flex-start;
+  }
+
+  .shop-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Sort Bar */
+  .shop-sort {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid rgba(212, 160, 160, 0.06);
+  }
+
+  .shop-sort__label {
+    font-size: var(--fs-xs);
+    color: var(--color-taupe);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+  }
+
+  .shop-sort__select {
+    padding: var(--space-xs) var(--space-md);
+    background: var(--color-black-muted);
+    border: 1px solid var(--color-taupe-dark);
+    border-radius: var(--radius-sm);
+    color: var(--color-cream);
+    font-size: var(--fs-sm);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a7d6b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+  }
+
+  /* Mobile Filter Toggle */
+  .shop-filter-toggle {
+    display: none;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-black-muted);
+    border: 1px solid var(--color-taupe-dark);
+    border-radius: var(--radius-sm);
+    color: var(--color-cream);
+    font-size: var(--fs-sm);
+    cursor: pointer;
+    margin-bottom: var(--space-lg);
+  }
+
+  @media (max-width: 900px) {
+    .shop-layout {
+      flex-direction: column;
+    }
+
+    .shop-filter-toggle {
+      display: inline-flex;
+    }
+  }
+</style>
+
+<script>
+  // Mobile filter toggle
+  const filterToggle = document.getElementById('filter-toggle');
+  const sidebar = document.getElementById('filter-sidebar');
+
+  filterToggle?.addEventListener('click', () => {
+    sidebar?.classList.toggle('is-open');
+  });
+
+  // Close sidebar overlay on mobile
+  document.addEventListener('click', (e) => {
+    if (sidebar?.classList.contains('is-open')) {
+      const target = e.target as HTMLElement;
+      if (!sidebar.contains(target) && target !== filterToggle) {
+        sidebar.classList.remove('is-open');
+      }
+    }
+  });
+
+  // Sort functionality
+  const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+  sortSelect?.addEventListener('change', () => {
+    const grid = document.getElementById('product-grid');
+    if (!grid) return;
+
+    const items = Array.from(grid.querySelectorAll('.product-grid__item')) as HTMLElement[];
+    const sortBy = sortSelect.value;
+
+    items.sort((a, b) => {
+      const cardA = a.querySelector('.product-card') as HTMLElement;
+      const cardB = b.querySelector('.product-card') as HTMLElement;
+      if (!cardA || !cardB) return 0;
+
+      const priceA = Number(cardA.dataset.price || 0);
+      const priceB = Number(cardB.dataset.price || 0);
+
+      switch (sortBy) {
+        case 'price-asc': return priceA - priceB;
+        case 'price-desc': return priceB - priceA;
+        case 'newest': return 0; // Keep original order
+        case 'discount': return priceA - priceB; // Cheapest = best deal
+        default: return 0;
+      }
+    });
+
+    items.forEach(item => grid.appendChild(item));
+  });
+</script>

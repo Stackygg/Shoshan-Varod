@@ -1,0 +1,63 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  align?: 'center' | 'left';
+}
+
+const { title, subtitle, align = 'center' } = Astro.props;
+---
+
+<div class:list={['section-title', `section-title--${align}`]}>
+  {subtitle && <span class="section-title__subtitle">{subtitle}</span>}
+  <h2 class="section-title__heading">{title}</h2>
+  <div class="section-title__line"></div>
+</div>
+
+<style>
+  .section-title {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .section-title--center {
+    text-align: center;
+  }
+
+  .section-title--left {
+    text-align: left;
+  }
+
+  .section-title__subtitle {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-title__heading {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-medium);
+    color: var(--color-cream);
+    line-height: var(--lh-snug);
+  }
+
+  .section-title__line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+    margin-top: var(--space-md);
+  }
+
+  .section-title--center .section-title__line {
+    margin-inline: auto;
+  }
+
+  .section-title--left .section-title__line {
+    background: linear-gradient(90deg, var(--color-gold), transparent);
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+import type { Product } from '../../lib/types';
+import SectionTitle from '../ui/SectionTitle.astro';
+import ProductCard from '../shop/ProductCard.astro';
+
+interface Props {
+  products: Product[];
+}
+
+const { products } = Astro.props;
+---
+
+{products.length > 0 && (
+  <section class="related section" id="related-products">
+    <div class="container">
+      <div class="reveal">
+        <SectionTitle subtitle="Vous aimerez aussi" title="Pièces similaires" />
+      </div>
+      <div class="related__grid">
+        {products.map((product, i) => (
+          <div class={`reveal reveal--delay-${i + 1}`}>
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .related__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 1024px) {
+    .related__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 576px) {
+    .related__grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+      margin-inline: auto;
+    }
+  }
+</style>

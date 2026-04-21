@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductGallery from '../../components/product/ProductGallery.astro';
+import ProductInfo from '../../components/product/ProductInfo.astro';
+import RelatedProducts from '../../components/product/RelatedProducts.astro';
+import { getProducts, getProduct, getRelatedProducts } from '../../lib/wordpress';
+
+export async function getStaticPaths() {
+  const products = await getProducts();
+  return products.map(product => ({
+    params: { slug: product.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const product = await getProduct(slug!);
+
+if (!product) {
+  return Astro.redirect('/boutique/');
+}
+
+const related = await getRelatedProducts(product, 4);
+---
+
+<BaseLayout
+  title={`${product.name} — ${product.brand}`}
+  description={product.shortDescription}
+>
+  <section class="product-page">
+    <div class="container">
+      <div class="product-page__grid">
+        <div class="product-page__gallery">
+          <ProductGallery product={product} />
+        </div>
+        <div class="product-page__info">
+          <ProductInfo product={product} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedProducts products={related} />
+</BaseLayout>
+
+<style>
+  .product-page {
+    padding-top: calc(80px + var(--space-2xl));
+    padding-bottom: var(--space-3xl);
+  }
+
+  .product-page__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: flex-start;
+  }
+
+  @media (max-width: 900px) {
+    .product-page__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

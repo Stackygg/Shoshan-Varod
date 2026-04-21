@@ -1,0 +1,88 @@
+---
+import { getAllBrands } from '../../lib/wordpress';
+import { brands as mockBrands } from '../../lib/mock-data';
+
+// Use WC brands if available, fallback to mock brand names
+const wcBrands = await getAllBrands();
+const brandNames = wcBrands.length > 0 ? wcBrands : mockBrands.map(b => b.name);
+---
+
+<section class="marquee-section" id="brands-marquee">
+  <div class="marquee-section__label">
+    <span>Nos marques</span>
+  </div>
+
+  <div class="marquee">
+    <div class="marquee__track">
+      {/* Duplicate for seamless loop */}
+      {[...brandNames, ...brandNames].map(brand => (
+        <span class="marquee__item">{brand}</span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-section {
+    padding-block: var(--space-3xl);
+    border-top: 1px solid rgba(212, 160, 160, 0.08);
+    border-bottom: 1px solid rgba(212, 160, 160, 0.08);
+    overflow: hidden;
+  }
+
+  .marquee-section__label {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .marquee-section__label span {
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-taupe);
+  }
+
+  .marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+
+  .marquee__track {
+    display: flex;
+    gap: var(--space-3xl);
+    width: max-content;
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee__track:hover {
+    animation-play-state: paused;
+  }
+
+  .marquee__item {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-regular);
+    color: var(--color-taupe-dark);
+    white-space: nowrap;
+    transition: color var(--duration-fast) var(--ease-out);
+    cursor: default;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .marquee__item:hover {
+    color: var(--color-gold);
+  }
+
+  /* Separator dots between brands */
+  .marquee__item:not(:last-child)::after {
+    content: '·';
+    margin-left: var(--space-3xl);
+    color: rgba(212, 160, 160, 0.3);
+  }
+</style>

@@ -1,0 +1,273 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer" id="main-footer">
+  <div class="footer__inner container">
+    <!-- Top: 4-column grid -->
+    <div class="footer__grid">
+      <!-- Brand Column -->
+      <div class="footer__col">
+        <a href="/" class="footer__logo">
+          <span class="footer__logo-accent">Shoshan</span>
+          <span class="footer__logo-text">Varod</span>
+        </a>
+        <p class="footer__tagline">
+          Mode de seconde main semi-luxe.<br />
+          Élégance responsable, pièces uniques.
+        </p>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+            </svg>
+          </a>
+          <a href="#" class="footer__social-link" aria-label="Pinterest">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 12a4 4 0 118 0c0 2.5-1.5 4.5-3 6l-1 4"/><line x1="12" y1="12" x2="12" y2="22"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="footer__col">
+        <h4 class="footer__heading">Navigation</h4>
+        <ul class="footer__list">
+          <li><a href="/" class="footer__link">Accueil</a></li>
+          <li><a href="/boutique/" class="footer__link">Boutique</a></li>
+          <li><a href="/a-propos/" class="footer__link">Notre Histoire</a></li>
+          <li><a href="/contact/" class="footer__link">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div class="footer__col">
+        <h4 class="footer__heading">Catégories</h4>
+        <ul class="footer__list">
+          <li><a href="/boutique/?cat=robes" class="footer__link">Robes</a></li>
+          <li><a href="/boutique/?cat=manteaux-vestes" class="footer__link">Manteaux & Vestes</a></li>
+          <li><a href="/boutique/?cat=sacs" class="footer__link">Sacs</a></li>
+          <li><a href="/boutique/?cat=pulls-mailles" class="footer__link">Pulls & Mailles</a></li>
+          <li><a href="/boutique/?cat=accessoires" class="footer__link">Accessoires</a></li>
+        </ul>
+      </div>
+
+      <!-- Info -->
+      <div class="footer__col">
+        <h4 class="footer__heading">Infos Pratiques</h4>
+        <ul class="footer__list">
+          <li class="footer__info-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>42 Rue du Faubourg Saint-Honoré<br />75008 Paris</span>
+          </li>
+          <li class="footer__info-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Mar — Sam : 10h — 19h<br />Dim : 11h — 17h</span>
+          </li>
+          <li class="footer__info-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            <span>+33 1 42 68 53 00</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer__bottom">
+      <div class="footer__bottom-line"></div>
+      <div class="footer__bottom-inner">
+        <p class="footer__copyright">
+          &copy; {currentYear} Shoshan Varod. Tous droits réservés.
+        </p>
+        <div class="footer__legal">
+          <a href="#" class="footer__legal-link">Mentions légales</a>
+          <a href="#" class="footer__legal-link">CGV</a>
+          <a href="#" class="footer__legal-link">Politique de confidentialité</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-bg-soft);
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-xl);
+    border-top: 1px solid rgba(212, 160, 160, 0.1);
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
+    gap: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  /* Logo */
+  .footer__logo {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
+    text-decoration: none;
+    margin-bottom: var(--space-md);
+  }
+
+  .footer__logo-accent {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-medium);
+    font-style: italic;
+    color: var(--color-gold);
+  }
+
+  .footer__logo-text {
+    font-family: var(--font-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-light);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-cream);
+  }
+
+  .footer__tagline {
+    font-size: var(--fs-sm);
+    color: var(--color-taupe);
+    line-height: var(--lh-relaxed);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Social */
+  .footer__social {
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .footer__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-taupe-dark);
+    border-radius: 50%;
+    color: var(--color-taupe);
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+
+  .footer__social-link:hover {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+    transform: translateY(-2px);
+  }
+
+  /* Column Heading */
+  .footer__heading {
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Links */
+  .footer__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer__link {
+    font-size: var(--fs-sm);
+    color: var(--color-taupe-light);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer__link:hover {
+    color: var(--color-cream);
+  }
+
+  /* Info items */
+  .footer__info-item {
+    display: flex;
+    gap: var(--space-sm);
+    font-size: var(--fs-sm);
+    color: var(--color-taupe-light);
+    line-height: var(--lh-relaxed);
+    align-items: flex-start;
+  }
+
+  .footer__info-item svg {
+    flex-shrink: 0;
+    margin-top: 4px;
+    color: var(--color-gold);
+  }
+
+  /* Bottom */
+  .footer__bottom-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 160, 160, 0.2), transparent);
+    margin-bottom: var(--space-lg);
+  }
+
+  .footer__bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .footer__copyright {
+    font-size: var(--fs-xs);
+    color: var(--color-taupe-dark);
+  }
+
+  .footer__legal {
+    display: flex;
+    gap: var(--space-lg);
+  }
+
+  .footer__legal-link {
+    font-size: var(--fs-xs);
+    color: var(--color-taupe-dark);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer__legal-link:hover {
+    color: var(--color-taupe);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .footer__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .footer__bottom-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .footer__legal {
+      justify-content: center;
+    }
+  }
+</style>

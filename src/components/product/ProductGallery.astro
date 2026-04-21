@@ -1,0 +1,145 @@
+---
+import type { Product } from '../../lib/types';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const hasImages = product.images.length > 0 && !product.images[0].includes('placeholder');
+---
+
+<div class="product-gallery" id="product-gallery">
+  <!-- Main Image -->
+  <div class="product-gallery__main">
+    <div class="product-gallery__main-image" id="gallery-main">
+      {hasImages ? (
+        <img
+          src={product.images[0]}
+          alt={`${product.brand} — ${product.name}`}
+          id="gallery-main-img"
+          width="600"
+          height="800"
+        />
+      ) : (
+        <div class="product-gallery__placeholder">
+          <span class="product-gallery__initial">{product.brand.charAt(0)}</span>
+          <span class="product-gallery__brand-name">{product.brand}</span>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <!-- Thumbnails -->
+  {hasImages && product.images.length > 1 && (
+    <div class="product-gallery__thumbs">
+      {product.images.map((img, i) => (
+        <button
+          class:list={['product-gallery__thumb', { 'is-active': i === 0 }]}
+          data-index={i}
+          data-src={img}
+          aria-label={`Vue ${i + 1}`}
+        >
+          <img src={img} alt={`${product.name} — vue ${i + 1}`} loading="lazy" />
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  .product-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .product-gallery__main {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-black-muted);
+  }
+
+  .product-gallery__main-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .product-gallery__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    background: linear-gradient(135deg, var(--color-black-muted) 0%, var(--color-black-soft) 100%);
+  }
+
+  .product-gallery__initial {
+    font-family: var(--font-serif);
+    font-size: 6rem;
+    font-weight: var(--fw-light);
+    color: rgba(212, 160, 160, 0.15);
+    line-height: 1;
+  }
+
+  .product-gallery__brand-name {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    color: rgba(212, 160, 160, 0.3);
+    letter-spacing: var(--ls-wider);
+  }
+
+  .product-gallery__main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Thumbnails */
+  .product-gallery__thumbs {
+    display: flex;
+    gap: var(--space-sm);
+  }
+
+  .product-gallery__thumb {
+    width: 72px;
+    height: 96px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease-out);
+    background: var(--color-black-muted);
+  }
+
+  .product-gallery__thumb.is-active,
+  .product-gallery__thumb:hover {
+    border-color: var(--color-gold);
+  }
+
+  .product-gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<script>
+  // Thumbnail click → swap main image
+  document.querySelectorAll('.product-gallery__thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const src = (thumb as HTMLElement).dataset.src;
+      const mainImg = document.getElementById('gallery-main-img') as HTMLImageElement;
+      if (mainImg && src) {
+        mainImg.src = src;
+      }
+      // Update active state
+      document.querySelectorAll('.product-gallery__thumb').forEach(t => t.classList.remove('is-active'));
+      thumb.classList.add('is-active');
+    });
+  });
+</script>

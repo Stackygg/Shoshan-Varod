@@ -1,0 +1,315 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionTitle from '../components/ui/SectionTitle.astro';
+---
+
+<BaseLayout
+  title="Notre Histoire"
+  description="Découvrez l'histoire de Shoshan Varod, friperie semi-luxe à Paris. Notre engagement pour une mode responsable et élégante."
+>
+  <!-- Page Hero -->
+  <section class="about-hero">
+    <div class="container container--narrow">
+      <div class="about-hero__content reveal">
+        <span class="about-hero__eyebrow">Notre Histoire</span>
+        <h1 class="about-hero__title">
+          L'élégance n'a pas<br />
+          besoin d'être <em>neuve</em>
+        </h1>
+        <div class="about-hero__line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Section -->
+  <section class="about-story section">
+    <div class="container container--narrow">
+      <div class="about-story__content reveal">
+        <p class="about-story__lead">
+          Shoshan Varod est né d'une conviction simple : les plus belles pièces de mode
+          méritent une seconde vie. Fondée en 2023, notre boutique parisienne sélectionne
+          avec passion les créations des maisons qui font la mode française et internationale.
+        </p>
+
+        <p>
+          Dans notre écrin du Faubourg Saint-Honoré, chaque pièce est minutieusement inspectée,
+          authentifiée et préparée. Nous ne proposons que des articles en excellent état,
+          issus de marques que nous aimons : <strong>Sandro</strong>, <strong>Maje</strong>,
+          <strong>Isabel Marant</strong>, <strong>A.P.C.</strong>, <strong>Acne Studios</strong>
+          et bien d'autres.
+        </p>
+
+        <p>
+          Notre mission va au-delà de la simple revente. Nous croyons en une mode circulaire
+          où qualité et responsabilité coexistent naturellement. Choisir la seconde main,
+          c'est faire un choix élégant pour soi et pour la planète.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="about-values section">
+    <div class="container">
+      <div class="reveal">
+        <SectionTitle subtitle="Nos engagements" title="Ce qui nous guide" />
+      </div>
+
+      <div class="about-values__grid">
+        <div class="about-values__card reveal reveal--delay-1">
+          <div class="about-values__card-number">01</div>
+          <h3 class="about-values__card-title">Authenticité</h3>
+          <p class="about-values__card-text">
+            Chaque pièce est vérifiée et authentifiée par notre équipe d'experts.
+            Nous garantissons l'origine et la qualité de tous nos articles.
+          </p>
+        </div>
+
+        <div class="about-values__card reveal reveal--delay-2">
+          <div class="about-values__card-number">02</div>
+          <h3 class="about-values__card-title">Sélection</h3>
+          <p class="about-values__card-text">
+            Nous ne gardons que les pièces qui méritent d'être portées à nouveau.
+            Notre taux de sélection est de 15% seulement — seul le meilleur entre.
+          </p>
+        </div>
+
+        <div class="about-values__card reveal reveal--delay-3">
+          <div class="about-values__card-number">03</div>
+          <h3 class="about-values__card-title">Responsabilité</h3>
+          <p class="about-values__card-text">
+            Prolonger la vie d'un vêtement réduit son empreinte environnementale de 82%.
+            Mode de seconde main = mode d'avenir.
+          </p>
+        </div>
+
+        <div class="about-values__card reveal reveal--delay-4">
+          <div class="about-values__card-number">04</div>
+          <h3 class="about-values__card-title">Accessibilité</h3>
+          <p class="about-values__card-text">
+            Des pièces de créateurs à des prix justes, en moyenne 70% moins cher
+            que le neuf. Le luxe accessible, sans compromis.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visit Section -->
+  <section class="about-visit section--lg">
+    <div class="container container--narrow">
+      <div class="about-visit__card reveal">
+        <span class="about-visit__eyebrow">Venez nous voir</span>
+        <h2 class="about-visit__title">Notre boutique</h2>
+        <div class="about-visit__info">
+          <div class="about-visit__detail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <strong>42 Rue du Faubourg Saint-Honoré</strong><br />
+              75008 Paris
+            </div>
+          </div>
+          <div class="about-visit__detail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div>
+              <strong>Mardi — Samedi :</strong> 10h — 19h<br />
+              <strong>Dimanche :</strong> 11h — 17h<br />
+              Lundi : fermé
+            </div>
+          </div>
+          <div class="about-visit__detail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div>
+              <strong>contact@shoshan-varod.fr</strong><br />
+              +33 1 42 68 53 00
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .about-hero {
+    padding-top: calc(80px + var(--space-4xl));
+    padding-bottom: var(--space-2xl);
+    text-align: center;
+  }
+
+  .about-hero__eyebrow {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-lg);
+  }
+
+  .about-hero__title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-3xl);
+    font-weight: var(--fw-regular);
+    color: var(--color-cream);
+    line-height: var(--lh-snug);
+    margin-bottom: var(--space-xl);
+  }
+
+  .about-hero__title em {
+    font-style: italic;
+    color: var(--color-gold);
+  }
+
+  .about-hero__line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+    margin-inline: auto;
+  }
+
+  /* Story */
+  .about-story__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .about-story__lead {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-regular);
+    color: var(--color-cream);
+    line-height: var(--lh-relaxed);
+    font-style: italic;
+  }
+
+  .about-story__content p {
+    font-size: var(--fs-base);
+    color: var(--color-taupe-light);
+    line-height: var(--lh-relaxed);
+  }
+
+  .about-story__content strong {
+    color: var(--color-gold);
+    font-weight: var(--fw-medium);
+  }
+
+  /* Values */
+  .about-values {
+    background: var(--color-black-soft);
+  }
+
+  .about-values__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .about-values__card {
+    padding: var(--space-xl);
+    background: var(--color-black-muted);
+    border: 1px solid rgba(212, 160, 160, 0.06);
+    border-radius: var(--radius-md);
+    transition: border-color var(--duration-normal) var(--ease-out);
+  }
+
+  .about-values__card:hover {
+    border-color: rgba(212, 160, 160, 0.2);
+  }
+
+  .about-values__card-number {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-light);
+    color: rgba(212, 160, 160, 0.2);
+    margin-bottom: var(--space-md);
+  }
+
+  .about-values__card-title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-medium);
+    color: var(--color-cream);
+    margin-bottom: var(--space-sm);
+  }
+
+  .about-values__card-text {
+    font-size: var(--fs-sm);
+    color: var(--color-taupe-light);
+    line-height: var(--lh-relaxed);
+  }
+
+  /* Visit */
+  .about-visit {
+    text-align: center;
+  }
+
+  .about-visit__card {
+    padding: var(--space-3xl);
+    border: 1px solid rgba(212, 160, 160, 0.15);
+    border-radius: var(--radius-lg);
+    background: var(--color-black-soft);
+  }
+
+  .about-visit__eyebrow {
+    display: block;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-sm);
+  }
+
+  .about-visit__title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-2xl);
+    color: var(--color-cream);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .about-visit__info {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2xl);
+    text-align: left;
+    flex-wrap: wrap;
+  }
+
+  .about-visit__detail {
+    display: flex;
+    gap: var(--space-sm);
+    font-size: var(--fs-sm);
+    color: var(--color-taupe-light);
+    line-height: var(--lh-relaxed);
+  }
+
+  .about-visit__detail svg {
+    color: var(--color-gold);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .about-visit__detail strong {
+    color: var(--color-cream);
+    font-weight: var(--fw-medium);
+  }
+
+  @media (max-width: 768px) {
+    .about-values__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-visit__info {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .about-visit__card {
+      padding: var(--space-xl);
+    }
+  }
+</style>

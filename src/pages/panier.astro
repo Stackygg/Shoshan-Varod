@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CartSummary from '../components/cart/CartSummary.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="Votre Sélection"
+  description="Consultez votre sélection de pièces et réservez vos articles."
+  noIndex={true}
+>
+  <section class="cart-page">
+    <div class="container">
+      <div class="cart-page__header reveal">
+        <span class="cart-page__eyebrow">Votre sélection</span>
+        <h1 class="cart-page__title">Panier</h1>
+        <p class="cart-page__count" id="cart-items-count">0 article</p>
+      </div>
+
+      <div class="cart-page__grid">
+        <!-- Cart Items -->
+        <div class="cart-page__items">
+          <CartSummary />
+        </div>
+
+        <!-- Reservation Form -->
+        <div class="cart-page__sidebar" id="reservation-section">
+          <div class="cart-page__total-card">
+            <h3 class="cart-page__total-heading">Récapitulatif</h3>
+            <div class="cart-page__total-row">
+              <span>Total</span>
+              <span class="cart-page__total-amount" id="cart-total-amount">0 €</span>
+            </div>
+            <p class="cart-page__total-note">
+              Paiement en boutique ou à la livraison
+            </p>
+          </div>
+
+          <div class="cart-page__reservation">
+            <h3 class="cart-page__reservation-heading">Réserver ces pièces</h3>
+            <p class="cart-page__reservation-text">
+              Remplissez ce formulaire pour réserver vos articles. Nous vous contacterons
+              sous 24h pour confirmer la disponibilité.
+            </p>
+
+            <form class="cart-page__form" id="reservation-form">
+              <div class="form-group">
+                <label class="form-label" for="res-firstname">Prénom *</label>
+                <input type="text" id="res-firstname" name="firstname" class="form-input" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="res-lastname">Nom *</label>
+                <input type="text" id="res-lastname" name="lastname" class="form-input" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="res-email">Email *</label>
+                <input type="email" id="res-email" name="email" class="form-input" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="res-phone">Téléphone</label>
+                <input type="tel" id="res-phone" name="phone" class="form-input" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="res-message">Message (optionnel)</label>
+                <textarea id="res-message" name="message" class="form-input form-textarea" rows="3"></textarea>
+              </div>
+
+              <Button type="submit" variant="primary" fullWidth id="reservation-submit">
+                Envoyer ma réservation
+              </Button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .cart-page {
+    padding-top: calc(80px + var(--space-3xl));
+    padding-bottom: var(--space-4xl);
+  }
+
+  .cart-page__header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .cart-page__eyebrow {
+    display: block;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-sm);
+  }
+
+  .cart-page__title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-3xl);
+    font-weight: var(--fw-regular);
+    color: var(--color-cream);
+    margin-bottom: var(--space-xs);
+  }
+
+  .cart-page__count {
+    font-size: var(--fs-sm);
+    color: var(--color-taupe);
+  }
+
+  /* Layout */
+  .cart-page__grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-2xl);
+    align-items: flex-start;
+  }
+
+  /* Sidebar */
+  .cart-page__sidebar {
+    position: sticky;
+    top: calc(80px + var(--space-lg));
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .cart-page__total-card {
+    padding: var(--space-lg);
+    background: var(--color-black-soft);
+    border: 1px solid rgba(212, 160, 160, 0.1);
+    border-radius: var(--radius-md);
+  }
+
+  .cart-page__total-heading {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    color: var(--color-cream);
+    margin-bottom: var(--space-md);
+  }
+
+  .cart-page__total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-semibold);
+    color: var(--color-cream);
+    padding-top: var(--space-md);
+    border-top: 1px solid rgba(212, 160, 160, 0.1);
+  }
+
+  .cart-page__total-amount {
+    color: var(--color-gold);
+    font-size: var(--fs-xl);
+  }
+
+  .cart-page__total-note {
+    font-size: var(--fs-xs);
+    color: var(--color-taupe);
+    margin-top: var(--space-sm);
+  }
+
+  /* Reservation Form */
+  .cart-page__reservation {
+    padding: var(--space-lg);
+    background: var(--color-black-soft);
+    border: 1px solid rgba(212, 160, 160, 0.08);
+    border-radius: var(--radius-md);
+  }
+
+  .cart-page__reservation-heading {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    color: var(--color-cream);
+    margin-bottom: var(--space-xs);
+  }
+
+  .cart-page__reservation-text {
+    font-size: var(--fs-sm);
+    color: var(--color-taupe);
+    line-height: var(--lh-relaxed);
+    margin-bottom: var(--space-lg);
+  }
+
+  .cart-page__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  @media (max-width: 900px) {
+    .cart-page__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cart-page__sidebar {
+      position: static;
+    }
+  }
+</style>

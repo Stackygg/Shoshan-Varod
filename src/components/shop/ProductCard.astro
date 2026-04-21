@@ -1,0 +1,320 @@
+---
+import type { Product } from '../../lib/types';
+import Badge from '../ui/Badge.astro';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+---
+
+<article class="product-card" id={`product-${product.slug}`} data-category={product.categorySlug} data-brand={product.brand} data-size={product.size} data-price={product.price} data-condition={product.condition}>
+  <a href={`/boutique/${product.slug}/`} class="product-card__link">
+    <!-- Image -->
+    <div class="product-card__image-wrap">
+      {product.images[0] && !product.images[0].includes('placeholder') ? (
+        <img
+          src={product.images[0]}
+          alt={`${product.brand} — ${product.name}`}
+          loading="lazy"
+          width="400"
+          height="533"
+        />
+      ) : (
+        <div class="product-card__image-placeholder">
+          <span class="product-card__image-initial">{product.brand.charAt(0)}</span>
+        </div>
+      )}
+
+      <!-- Badges -->
+      <div class="product-card__badges">
+        {product.isNew && <Badge variant="new" text="Nouveau" />}
+        {product.isSold && <Badge variant="sold" text="Vendu" />}
+        <Badge variant="condition" text={product.condition} />
+      </div>
+
+      <!-- Hover overlay -->
+      <div class="product-card__overlay">
+        <span class="product-card__view">Voir le détail</span>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="product-card__info">
+      <span class="product-card__brand">{product.brand}</span>
+      <h3 class="product-card__name">{product.name}</h3>
+      <div class="product-card__meta">
+        <span class="product-card__size">Taille {product.size}</span>
+        <span class="product-card__condition">{product.condition}</span>
+      </div>
+      <div class="product-card__pricing">
+        <span class="product-card__price">{product.price} €</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- Quick Add Button -->
+  <button
+    class="product-card__add-btn"
+    data-product-id={product.id}
+    data-product-slug={product.slug}
+    data-product-name={product.name}
+    data-product-brand={product.brand}
+    data-product-price={product.price}
+    data-product-size={product.size}
+    data-product-image={product.images[0] || ''}
+    disabled={product.isSold}
+    aria-label={`Ajouter ${product.name} au panier`}
+  >
+    {product.isSold ? 'Épuisé' : 'Ajouter au panier'}
+  </button>
+</article>
+
+<style>
+  .product-card {
+    position: relative;
+    background: var(--color-black-soft);
+    border: 1px solid rgba(212, 160, 160, 0.06);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+
+  .product-card:hover {
+    border-color: rgba(212, 160, 160, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .product-card__link {
+    text-decoration: none;
+    display: block;
+  }
+
+  /* Image */
+  .product-card__image-wrap {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: var(--color-black-muted);
+  }
+
+  .product-card__image-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-black-muted) 0%, var(--color-black-soft) 100%);
+  }
+
+  .product-card__image-initial {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: var(--fw-light);
+    color: rgba(212, 160, 160, 0.15);
+    user-select: none;
+  }
+
+  .product-card__image-wrap img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .product-card:hover .product-card__image-wrap img {
+    transform: scale(1.06);
+  }
+
+  /* Badges */
+  .product-card__badges {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    z-index: 2;
+  }
+
+  /* Overlay */
+  .product-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+    z-index: 1;
+  }
+
+  .product-card:hover .product-card__overlay {
+    opacity: 1;
+  }
+
+  .product-card__view {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-cream);
+    padding: var(--space-xs) var(--space-lg);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius-sm);
+    transform: translateY(10px);
+    transition: transform var(--duration-normal) var(--ease-out);
+  }
+
+  .product-card:hover .product-card__view {
+    transform: translateY(0);
+  }
+
+  /* Info */
+  .product-card__info {
+    padding: var(--space-md);
+  }
+
+  .product-card__brand {
+    display: block;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-2xs);
+  }
+
+  .product-card__name {
+    font-family: var(--font-serif);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-regular);
+    color: var(--color-cream);
+    margin-bottom: var(--space-xs);
+    line-height: var(--lh-snug);
+  }
+
+  .product-card__meta {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .product-card__size,
+  .product-card__condition {
+    font-size: var(--fs-xs);
+    color: var(--color-taupe);
+  }
+
+  .product-card__meta span:not(:last-child)::after {
+    content: '·';
+    margin-left: var(--space-sm);
+    color: var(--color-taupe-dark);
+  }
+
+  /* Pricing */
+  .product-card__pricing {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+  }
+
+  .product-card__price {
+    font-size: var(--fs-md);
+    font-weight: var(--fw-bold);
+    color: var(--color-cream);
+  }
+
+  /* Add to Cart Button */
+  .product-card__add-btn {
+    display: block;
+    width: calc(100% - var(--space-md) * 2);
+    margin: 0 var(--space-md) var(--space-md);
+    padding: var(--space-sm);
+    background: transparent;
+    border: 1px solid rgba(212, 160, 160, 0.3);
+    border-radius: var(--radius-sm);
+    color: var(--color-gold);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all var(--duration-normal) var(--ease-out);
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  .product-card:hover .product-card__add-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .product-card__add-btn:hover:not(:disabled) {
+    background: var(--color-gold);
+    color: var(--color-black);
+    border-color: var(--color-gold);
+  }
+
+  .product-card__add-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+</style>
+
+<script>
+  // Add to cart functionality
+  document.querySelectorAll('.product-card__add-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const button = e.currentTarget as HTMLButtonElement;
+      if (button.disabled) return;
+
+      const item = {
+        productId: Number(button.dataset.productId),
+        slug: button.dataset.productSlug,
+        name: button.dataset.productName,
+        brand: button.dataset.productBrand,
+        price: Number(button.dataset.productPrice),
+        size: button.dataset.productSize,
+        image: button.dataset.productImage || '',
+      };
+
+      try {
+        const cart = JSON.parse(localStorage.getItem('shoshan-cart') || '[]');
+        // Check if already in cart (unique items)
+        if (cart.some((c: any) => c.productId === item.productId)) {
+          button.textContent = 'Déjà dans le panier';
+          setTimeout(() => { button.textContent = 'Ajouter au panier'; }, 2000);
+          return;
+        }
+
+        cart.push(item);
+        localStorage.setItem('shoshan-cart', JSON.stringify(cart));
+        window.dispatchEvent(new Event('cart-updated'));
+
+        button.textContent = '✓ Ajouté';
+        button.style.background = 'var(--color-gold)';
+        button.style.color = 'var(--color-black)';
+        button.style.borderColor = 'var(--color-gold)';
+
+        setTimeout(() => {
+          button.textContent = 'Ajouter au panier';
+          button.style.background = '';
+          button.style.color = '';
+          button.style.borderColor = '';
+        }, 2000);
+      } catch {
+        console.error('Cart error');
+      }
+    });
+  });
+</script>

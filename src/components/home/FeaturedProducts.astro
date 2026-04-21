@@ -1,0 +1,58 @@
+---
+import SectionTitle from '../ui/SectionTitle.astro';
+import ProductCard from '../shop/ProductCard.astro';
+import Button from '../ui/Button.astro';
+import { getFeaturedProducts } from '../../lib/wordpress';
+
+const featured = await getFeaturedProducts();
+---
+
+<section class="featured section" id="featured-products">
+  <div class="container">
+    <div class="reveal">
+      <SectionTitle
+        subtitle="Sélection"
+        title="Pièces d'exception"
+      />
+    </div>
+
+    <div class="featured__grid">
+      {featured.slice(0, 4).map((product, i) => (
+        <div class={`reveal reveal--delay-${i + 1}`}>
+          <ProductCard product={product} />
+        </div>
+      ))}
+    </div>
+
+    <div class="featured__cta reveal">
+      <Button href="/boutique/" variant="outline">Voir toute la collection</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .featured__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .featured__cta {
+    text-align: center;
+  }
+
+  @media (max-width: 1024px) {
+    .featured__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 576px) {
+    .featured__grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+      margin-inline: auto;
+    }
+  }
+</style>

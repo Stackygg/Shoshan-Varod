@@ -1,0 +1,47 @@
+---
+interface Props {
+  variant?: 'new' | 'sold' | 'condition' | 'discount';
+  text: string;
+}
+
+const { variant = 'new', text } = Astro.props;
+---
+
+<span class={`badge badge--${variant}`}>{text}</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25em 0.65em;
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .badge--new {
+    background: var(--color-gold);
+    color: var(--color-black);
+  }
+
+  .badge--sold {
+    background: var(--color-error);
+    color: var(--color-white);
+  }
+
+  .badge--condition {
+    background: rgba(212, 160, 160, 0.15);
+    color: var(--color-gold);
+    border: 1px solid rgba(212, 160, 160, 0.3);
+  }
+
+  .badge--discount {
+    background: var(--color-success);
+    color: var(--color-white);
+  }
+</style>

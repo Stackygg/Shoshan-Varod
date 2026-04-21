@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import FeaturedProducts from '../components/home/FeaturedProducts.astro';
+import Categories from '../components/home/Categories.astro';
+import BrandMarquee from '../components/home/BrandMarquee.astro';
+import Philosophy from '../components/home/Philosophy.astro';
+import Newsletter from '../components/home/Newsletter.astro';
+---
+
+<BaseLayout
+  title="Shoshan Varod — Friperie Semi-Luxe à Paris"
+  description="Friperie semi-luxe à Paris. Pièces uniques de créateurs — Sandro, Maje, Isabel Marant, A.P.C. — sélectionnées avec soin. Mode responsable et élégante."
+>
+  <Hero />
+  <FeaturedProducts />
+  <Categories />
+  <BrandMarquee />
+  <Philosophy />
+  <Newsletter />
+</BaseLayout>

@@ -1,0 +1,357 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/', label: 'Accueil' },
+  { href: '/boutique/', label: 'Boutique' },
+  { href: '/a-propos/', label: 'Notre Histoire' },
+  { href: '/contact/', label: 'Contact' },
+];
+---
+
+<header class="header" id="main-header">
+  <div class="header__inner container--wide">
+    <!-- Logo -->
+    <a href="/" class="header__logo" id="header-logo">
+      <span class="header__logo-accent">Shoshan</span>
+      <span class="header__logo-text">Varod</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="header__nav hide-mobile" id="desktop-nav" aria-label="Navigation principale">
+      <ul class="header__nav-list">
+        {navLinks.map(link => (
+          <li>
+            <a
+              href={link.href}
+              class:list={['header__nav-link', { 'is-active': currentPath === link.href }]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="header__actions">
+      <!-- Cart Button -->
+      <button class="header__cart" id="cart-toggle" aria-label="Ouvrir le panier">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="header__cart-count" id="cart-count">0</span>
+      </button>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="header__menu-toggle hide-desktop" id="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span class="header__menu-bar"></span>
+        <span class="header__menu-bar"></span>
+        <span class="header__menu-bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="header__mobile-menu" id="mobile-menu">
+    <nav aria-label="Navigation mobile">
+      <ul class="header__mobile-list">
+        {navLinks.map((link, i) => (
+          <li style={`--delay: ${i * 0.08}s`}>
+            <a
+              href={link.href}
+              class:list={['header__mobile-link', { 'is-active': currentPath === link.href }]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+    background: transparent;
+    transition: background var(--duration-normal) var(--ease-out),
+                box-shadow var(--duration-normal) var(--ease-out),
+                backdrop-filter var(--duration-normal) var(--ease-out);
+  }
+
+  .header.is-scrolled {
+    background: rgba(250, 248, 245, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 rgba(212, 160, 160, 0.15);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg) var(--gutter);
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    transition: padding var(--duration-normal) var(--ease-out);
+  }
+
+  .header.is-scrolled .header__inner {
+    padding-block: var(--space-sm);
+  }
+
+  /* Logo */
+  .header__logo {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
+    text-decoration: none;
+    z-index: 10;
+  }
+
+  .header__logo-accent {
+    font-family: var(--font-serif);
+    font-size: var(--fs-xl);
+    font-weight: var(--fw-medium);
+    font-style: italic;
+    color: var(--color-gold);
+  }
+
+  .header__logo-text {
+    font-family: var(--font-sans);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-light);
+    letter-spacing: var(--ls-widest);
+    text-transform: uppercase;
+    color: var(--color-cream);
+  }
+
+  /* Desktop Nav */
+  .header__nav-list {
+    display: flex;
+    gap: var(--space-xl);
+  }
+
+  .header__nav-link {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-regular);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--color-cream);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 4px;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .header__nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-gold);
+    transition: width var(--duration-normal) var(--ease-out);
+  }
+
+  .header__nav-link:hover,
+  .header__nav-link.is-active {
+    color: var(--color-gold);
+  }
+
+  .header__nav-link:hover::after,
+  .header__nav-link.is-active::after {
+    width: 100%;
+  }
+
+  /* Actions */
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    z-index: 10;
+  }
+
+  .header__cart {
+    position: relative;
+    color: var(--color-cream);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .header__cart:hover {
+    color: var(--color-gold);
+  }
+
+  .header__cart-count {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: var(--color-gold);
+    color: var(--color-black);
+    font-size: 0.6rem;
+    font-weight: var(--fw-bold);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0);
+    transition: all var(--duration-fast) var(--ease-spring);
+  }
+
+  .header__cart-count.has-items {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Mobile Menu Toggle */
+  .header__menu-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 28px;
+    padding: 4px 0;
+  }
+
+  .header__menu-bar {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--color-cream);
+    border-radius: 1px;
+    transition: all var(--duration-normal) var(--ease-out);
+    transform-origin: center;
+  }
+
+  .header__menu-toggle.is-open .header__menu-bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+
+  .header__menu-toggle.is-open .header__menu-bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .header__menu-toggle.is-open .header__menu-bar:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* Mobile Menu */
+  .header__mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(250, 248, 245, 0.98);
+    backdrop-filter: blur(30px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--duration-slow) var(--ease-out);
+    z-index: var(--z-overlay);
+  }
+
+  .header__mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .header__mobile-list {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .header__mobile-list li {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--duration-slow) var(--ease-out);
+    transition-delay: var(--delay);
+  }
+
+  .header__mobile-menu.is-open .header__mobile-list li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .header__mobile-link {
+    font-family: var(--font-serif);
+    font-size: var(--fs-3xl);
+    font-weight: var(--fw-regular);
+    color: var(--color-cream);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .header__mobile-link:hover,
+  .header__mobile-link.is-active {
+    color: var(--color-gold);
+  }
+</style>
+
+<script>
+  // Scroll behavior for header
+  const header = document.getElementById('main-header');
+  let lastScroll = 0;
+
+  function handleScroll() {
+    const scrollY = window.scrollY;
+    if (scrollY > 50) {
+      header?.classList.add('is-scrolled');
+    } else {
+      header?.classList.remove('is-scrolled');
+    }
+    lastScroll = scrollY;
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = menuToggle.classList.toggle('is-open');
+    mobileMenu?.classList.toggle('is-open');
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  // Close mobile menu on link click
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle?.classList.remove('is-open');
+      mobileMenu?.classList.remove('is-open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Cart count from localStorage
+  function updateCartCount() {
+    const cartCountEl = document.getElementById('cart-count');
+    if (!cartCountEl) return;
+    try {
+      const cart = JSON.parse(localStorage.getItem('shoshan-cart') || '[]');
+      const count = cart.length;
+      cartCountEl.textContent = String(count);
+      cartCountEl.classList.toggle('has-items', count > 0);
+    } catch {
+      cartCountEl.textContent = '0';
+    }
+  }
+
+  updateCartCount();
+  window.addEventListener('cart-updated', updateCartCount);
+</script>

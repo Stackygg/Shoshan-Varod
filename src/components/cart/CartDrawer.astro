@@ -1,0 +1,335 @@
+---
+
+---
+
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer__overlay" id="cart-overlay"></div>
+  <div class="cart-drawer__panel">
+    <div class="cart-drawer__header">
+      <h2 class="cart-drawer__title">Votre sélection</h2>
+      <button class="cart-drawer__close" id="cart-close" aria-label="Fermer le panier">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-drawer__items" id="cart-drawer-items">
+      <!-- Items populated by JS -->
+    </div>
+
+    <div class="cart-drawer__empty" id="cart-drawer-empty">
+      <span class="cart-drawer__empty-icon">✦</span>
+      <p>Votre sélection est vide</p>
+      <a href="/boutique/" class="cart-drawer__browse">Parcourir la boutique</a>
+    </div>
+
+    <div class="cart-drawer__footer" id="cart-drawer-footer">
+      <div class="cart-drawer__total">
+        <span>Total</span>
+        <span id="cart-drawer-total">0 €</span>
+      </div>
+      <a href="/panier/" class="cart-drawer__checkout-btn">Réserver mes pièces</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cart-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    pointer-events: none;
+  }
+
+  .cart-drawer.is-open {
+    pointer-events: auto;
+  }
+
+  .cart-drawer__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+  }
+
+  .cart-drawer.is-open .cart-drawer__overlay {
+    opacity: 1;
+  }
+
+  .cart-drawer__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 420px;
+    max-width: 92vw;
+    background: var(--color-black);
+    border-left: 1px solid rgba(212, 160, 160, 0.1);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform var(--duration-normal) var(--ease-out);
+  }
+
+  .cart-drawer.is-open .cart-drawer__panel {
+    transform: translateX(0);
+  }
+
+  /* Header */
+  .cart-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg);
+    border-bottom: 1px solid rgba(212, 160, 160, 0.1);
+  }
+
+  .cart-drawer__title {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-medium);
+    color: var(--color-cream);
+  }
+
+  .cart-drawer__close {
+    color: var(--color-taupe);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .cart-drawer__close:hover {
+    color: var(--color-cream);
+  }
+
+  /* Items */
+  .cart-drawer__items {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-md);
+  }
+
+  /* Empty State */
+  .cart-drawer__empty {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+  }
+
+  .cart-drawer__empty.is-visible {
+    display: flex;
+  }
+
+  .cart-drawer__empty-icon {
+    font-size: 2rem;
+    color: var(--color-gold);
+  }
+
+  .cart-drawer__empty p {
+    color: var(--color-taupe);
+  }
+
+  .cart-drawer__browse {
+    font-size: var(--fs-sm);
+    color: var(--color-gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Footer */
+  .cart-drawer__footer {
+    padding: var(--space-lg);
+    border-top: 1px solid rgba(212, 160, 160, 0.1);
+    display: none;
+  }
+
+  .cart-drawer__footer.is-visible {
+    display: block;
+  }
+
+  .cart-drawer__total {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-semibold);
+    color: var(--color-cream);
+    margin-bottom: var(--space-md);
+  }
+
+  .cart-drawer__checkout-btn {
+    display: block;
+    width: 100%;
+    padding: var(--space-md);
+    background: var(--color-gold);
+    color: var(--color-black);
+    text-align: center;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: background var(--duration-fast) var(--ease-out);
+  }
+
+  .cart-drawer__checkout-btn:hover {
+    background: var(--color-gold-light);
+  }
+
+  /* Cart Item in Drawer */
+  :global(.cart-drawer-item) {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid rgba(212, 160, 160, 0.06);
+  }
+
+  :global(.cart-drawer-item__image) {
+    width: 64px;
+    height: 80px;
+    background: var(--color-black-muted);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: var(--font-serif);
+    color: rgba(212, 160, 160, 0.2);
+    font-size: 1.2rem;
+  }
+
+  :global(.cart-drawer-item__info) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  :global(.cart-drawer-item__brand) {
+    font-size: var(--fs-xs);
+    color: var(--color-gold);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wider);
+    font-weight: var(--fw-semibold);
+  }
+
+  :global(.cart-drawer-item__name) {
+    font-size: var(--fs-sm);
+    color: var(--color-cream);
+  }
+
+  :global(.cart-drawer-item__meta) {
+    font-size: var(--fs-xs);
+    color: var(--color-taupe);
+  }
+
+  :global(.cart-drawer-item__price) {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--color-cream);
+    margin-top: auto;
+  }
+
+  :global(.cart-drawer-item__remove) {
+    align-self: flex-start;
+    color: var(--color-taupe-dark);
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-out);
+    background: none;
+    border: none;
+    padding: var(--space-2xs);
+  }
+
+  :global(.cart-drawer-item__remove:hover) {
+    color: var(--color-error);
+  }
+</style>
+
+<script>
+  const drawer = document.getElementById('cart-drawer');
+  const overlay = document.getElementById('cart-overlay');
+  const closeBtn = document.getElementById('cart-close');
+  const cartToggle = document.getElementById('cart-toggle');
+  const itemsContainer = document.getElementById('cart-drawer-items');
+  const emptyState = document.getElementById('cart-drawer-empty');
+  const footer = document.getElementById('cart-drawer-footer');
+  const totalDisplay = document.getElementById('cart-drawer-total');
+
+  function openDrawer() {
+    drawer?.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    renderCart();
+  }
+
+  function closeDrawer() {
+    drawer?.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  cartToggle?.addEventListener('click', openDrawer);
+  overlay?.addEventListener('click', closeDrawer);
+  closeBtn?.addEventListener('click', closeDrawer);
+
+  function renderCart() {
+    if (!itemsContainer || !emptyState || !footer || !totalDisplay) return;
+
+    try {
+      const cart = JSON.parse(localStorage.getItem('shoshan-cart') || '[]');
+
+      if (cart.length === 0) {
+        itemsContainer.style.display = 'none';
+        emptyState.classList.add('is-visible');
+        footer.classList.remove('is-visible');
+        return;
+      }
+
+      itemsContainer.style.display = 'block';
+      emptyState.classList.remove('is-visible');
+      footer.classList.add('is-visible');
+
+      let total = 0;
+      itemsContainer.innerHTML = cart.map((item: any) => {
+        total += item.price;
+        const hasImg = item.image && !item.image.includes('placeholder');
+        const imgContent = hasImg
+          ? `<img src="${item.image}" alt="${item.brand}" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">`
+          : (item.brand || '?').charAt(0);
+        return `
+          <div class="cart-drawer-item">
+            <div class="cart-drawer-item__image">${imgContent}</div>
+            <div class="cart-drawer-item__info">
+              <span class="cart-drawer-item__brand">${item.brand}</span>
+              <span class="cart-drawer-item__name">${item.name}</span>
+              <span class="cart-drawer-item__meta">Taille ${item.size}</span>
+              <span class="cart-drawer-item__price">${item.price} €</span>
+            </div>
+            <button class="cart-drawer-item__remove" data-remove-id="${item.productId}" aria-label="Retirer ${item.name}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      totalDisplay.textContent = total + ' €';
+
+      // Remove buttons
+      itemsContainer.querySelectorAll('[data-remove-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = Number((btn as HTMLElement).dataset.removeId);
+          const updatedCart = cart.filter((c: any) => c.productId !== id);
+          localStorage.setItem('shoshan-cart', JSON.stringify(updatedCart));
+          window.dispatchEvent(new Event('cart-updated'));
+          renderCart();
+        });
+      });
+    } catch {
+      console.error('Cart render error');
+    }
+  }
+
+  window.addEventListener('cart-updated', renderCart);
+</script>

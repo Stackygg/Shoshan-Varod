@@ -1,0 +1,157 @@
+---
+import SectionTitle from '../ui/SectionTitle.astro';
+import { getCategories } from '../../lib/wordpress';
+
+const categories = await getCategories();
+---
+
+<section class="categories section" id="categories-section">
+  <div class="container">
+    <div class="reveal">
+      <SectionTitle
+        subtitle="Explorer"
+        title="Nos univers"
+      />
+    </div>
+
+    <div class="categories__grid">
+      {categories.map((cat, i) => (
+        <a
+          href={`/boutique/?cat=${cat.slug}`}
+          class={`categories__card reveal reveal--delay-${(i % 3) + 1}`}
+          id={`category-${cat.slug}`}
+        >
+          <div class="categories__card-bg">
+            <div class="categories__card-gradient"></div>
+          </div>
+          <div class="categories__card-content">
+            <h3 class="categories__card-name">{cat.name}</h3>
+            <p class="categories__card-count">{cat.count} pièces</p>
+            <span class="categories__card-arrow">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .categories__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .categories__card {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 220px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform var(--duration-normal) var(--ease-out);
+  }
+
+  .categories__card:hover {
+    transform: translateY(-4px);
+  }
+
+  .categories__card-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--color-black-muted);
+    transition: all var(--duration-slow) var(--ease-out);
+  }
+
+  .categories__card:nth-child(1) .categories__card-bg { background: linear-gradient(135deg, #fdfbf8 0%, #f5f0eb 100%); }
+  .categories__card:nth-child(2) .categories__card-bg { background: linear-gradient(135deg, #fcfaf6 0%, #f7f2ed 100%); }
+  .categories__card:nth-child(3) .categories__card-bg { background: linear-gradient(135deg, #fbf8f5 0%, #f4eee9 100%); }
+  .categories__card:nth-child(4) .categories__card-bg { background: linear-gradient(135deg, #fcf9f5 0%, #f6f1ec 100%); }
+  .categories__card:nth-child(5) .categories__card-bg { background: linear-gradient(135deg, #fbf7f4 0%, #f3ede7 100%); }
+  .categories__card:nth-child(6) .categories__card-bg { background: linear-gradient(135deg, #fdfbf8 0%, #f5f0eb 100%); }
+
+  .categories__card-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212, 160, 160, 0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+  }
+
+  .categories__card:hover .categories__card-gradient {
+    opacity: 1;
+  }
+
+  .categories__card-content {
+    position: relative;
+    z-index: 1;
+    padding: var(--space-lg);
+    width: 100%;
+  }
+
+  .categories__card-name {
+    font-family: var(--font-serif);
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-medium);
+    color: var(--color-cream);
+    margin-bottom: var(--space-2xs);
+  }
+
+  .categories__card-count {
+    font-size: var(--fs-xs);
+    color: var(--color-taupe);
+    letter-spacing: var(--ls-wide);
+  }
+
+  .categories__card-arrow {
+    position: absolute;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    color: var(--color-gold);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+
+  .categories__card:hover .categories__card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Border glow on hover */
+  .categories__card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(44, 36, 32, 0.05); /* Soft border for light theme */
+    transition: border-color var(--duration-normal) var(--ease-out);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .categories__card:hover::before {
+    border-color: rgba(212, 160, 160, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .categories__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .categories__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .categories__card {
+      min-height: 160px;
+    }
+  }
+</style>
