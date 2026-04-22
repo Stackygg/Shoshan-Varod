@@ -3,6 +3,16 @@ import SectionTitle from '../ui/SectionTitle.astro';
 import { getCategories } from '../../lib/wordpress';
 
 const categories = await getCategories();
+
+function getCategoryImage(slug: string) {
+  if (slug.includes('accessoire')) return '/images/category_accessoires.png';
+  if (slug.includes('manteau') || slug.includes('veste')) return '/images/category_manteaux.png';
+  if (slug.includes('pantalon')) return '/images/category_pantalons.png';
+  if (slug.includes('pull') || slug.includes('maille')) return '/images/category_pulls.png';
+  if (slug.includes('robe')) return '/images/category_robes.png';
+  if (slug.includes('sac')) return '/images/category_sacs.png';
+  return null;
+}
 ---
 
 <section class="categories section" id="categories-section">
@@ -22,17 +32,23 @@ const categories = await getCategories();
           id={`category-${cat.slug}`}
         >
           <div class="categories__card-bg">
-            <div class="categories__card-gradient"></div>
+            {(() => {
+              const imgSrc = getCategoryImage(cat.slug);
+              if (imgSrc) {
+                return <img src={imgSrc} alt={cat.name} class="categories__card-img" loading="lazy" />
+              }
+              return <div class="categories__card-gradient"></div>;
+            })()}
           </div>
           <div class="categories__card-content">
             <h3 class="categories__card-name">{cat.name}</h3>
             <p class="categories__card-count">{cat.count} pièces</p>
-            <span class="categories__card-arrow">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-              </svg>
-            </span>
           </div>
+          <span class="categories__card-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </span>
         </a>
       ))}
     </div>
@@ -49,8 +65,8 @@ const categories = await getCategories();
   .categories__card {
     position: relative;
     display: flex;
-    align-items: flex-end;
-    min-height: 220px;
+    align-items: flex-start;
+    min-height: 250px;
     border-radius: var(--radius-md);
     overflow: hidden;
     text-decoration: none;
@@ -65,62 +81,76 @@ const categories = await getCategories();
     position: absolute;
     inset: 0;
     background: var(--color-black-muted);
-    transition: all var(--duration-slow) var(--ease-out);
+    overflow: hidden;
   }
 
-  .categories__card:nth-child(1) .categories__card-bg { background: linear-gradient(135deg, #fdfbf8 0%, #f5f0eb 100%); }
-  .categories__card:nth-child(2) .categories__card-bg { background: linear-gradient(135deg, #fcfaf6 0%, #f7f2ed 100%); }
-  .categories__card:nth-child(3) .categories__card-bg { background: linear-gradient(135deg, #fbf8f5 0%, #f4eee9 100%); }
-  .categories__card:nth-child(4) .categories__card-bg { background: linear-gradient(135deg, #fcf9f5 0%, #f6f1ec 100%); }
-  .categories__card:nth-child(5) .categories__card-bg { background: linear-gradient(135deg, #fbf7f4 0%, #f3ede7 100%); }
-  .categories__card:nth-child(6) .categories__card-bg { background: linear-gradient(135deg, #fdfbf8 0%, #f5f0eb 100%); }
+  .categories__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .categories__card:hover .categories__card-img {
+    transform: scale(1.05);
+  }
 
   .categories__card-gradient {
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg, rgba(212, 160, 160, 0.08) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity var(--duration-normal) var(--ease-out);
-  }
-
-  .categories__card:hover .categories__card-gradient {
-    opacity: 1;
   }
 
   .categories__card-content {
     position: relative;
     z-index: 1;
-    padding: var(--space-lg);
-    width: 100%;
+    margin: var(--space-md);
+    padding: var(--space-xs) var(--space-md);
+    background: rgba(212, 160, 160, 0.9); /* Rose Shoshan */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   }
 
   .categories__card-name {
     font-family: var(--font-serif);
-    font-size: var(--fs-lg);
-    font-weight: var(--fw-medium);
-    color: var(--color-cream);
-    margin-bottom: var(--space-2xs);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-bold);
+    color: var(--color-black);
+    margin-bottom: 2px;
   }
 
   .categories__card-count {
     font-size: var(--fs-xs);
-    color: var(--color-taupe);
+    color: rgba(44, 36, 32, 0.8);
     letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
   }
 
   .categories__card-arrow {
     position: absolute;
-    bottom: var(--space-lg);
-    right: var(--space-lg);
-    color: var(--color-gold);
+    bottom: var(--space-md);
+    right: var(--space-md);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(212, 160, 160, 0.95);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-black);
     opacity: 0;
-    transform: translateX(-10px);
+    transform: translateY(10px) translateX(-10px);
     transition: all var(--duration-normal) var(--ease-out);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   }
 
   .categories__card:hover .categories__card-arrow {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0) translateX(0);
   }
 
   /* Border glow on hover */
